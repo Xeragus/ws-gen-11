@@ -10,12 +10,7 @@ mongoose.connect("mongodb://localhost/healthcareapp", {
 });
 app.use("/", router);
 
-<<<<<<< HEAD
-console.log('hehehe');
-app.listen('3000', (error) => {
-=======
 app.listen("3000", (error) => {
->>>>>>> da5df71... Add model and routes for User
   if (error) {
     return console.log(
       "Error happened while starting the app on port 3000: ",
