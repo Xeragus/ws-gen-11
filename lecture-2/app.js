@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
-const router = require("./router");
+const blogPostsRouter = require("./routers/blog-posts-router");
 const mongoose = require("mongoose");
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost/healthcareapp", {
+mongoose.connect("mongodb://localhost/blog", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-app.use("/", router);
+app.use("/blogposts", blogPostsRouter);
 
 app.listen("3000", (error) => {
   if (error) {

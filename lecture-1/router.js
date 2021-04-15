@@ -10,13 +10,13 @@ router
       products: [4, 5, true, "hehe", [1, 2], { 5: 3 }],
     });
   })
-  .get("/user", async (req, res) => {
+  .get("/users", async (req, res) => {
     const users = await User.find();
     res.send({
       users: users,
     });
   })
-  .post("/user/new", async (req, res) => {
+  .post("/users", async (req, res) => {
     const user = new User(req.body);
     await user.save();
 
