@@ -8,6 +8,10 @@ var blogPostSchema = mongoose.Schema({
   content: {
     type: String,
     required: ['Please provide the content of the blog post']
+  },
+  category: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Category'
   }
 });
 

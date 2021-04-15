@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const blogPostsRouter = require("./routers/blog-posts-router");
+const categoriesRouter = require('./routers/categories-router')
 const mongoose = require("mongoose");
 app.use(express.json());
 
@@ -10,6 +11,7 @@ mongoose.connect("mongodb://localhost/blog", {
 });
 
 app.use("/blogposts", blogPostsRouter);
+app.use("/categories", categoriesRouter)
 
 app.listen("3000", (error) => {
   if (error) {

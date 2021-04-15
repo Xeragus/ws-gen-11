@@ -6,4 +6,5 @@ router.get('/', controller.fetchAll)
       .get('/:id', controller.fetchOne)
       .post('/', controller.create)
 
+
 module.exports = router;
