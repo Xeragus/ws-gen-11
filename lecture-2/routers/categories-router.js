@@ -7,6 +7,7 @@ router.get('/', categoriesController.fetchAll)
       .post('/', categoriesController.create)
       .patch("/:id", categoriesController.patchUpdate)
       .put("/:id", categoriesController.putUpdate)
+      .delete("/:id", categoriesController.delete)
       
 
 module.exports = router;

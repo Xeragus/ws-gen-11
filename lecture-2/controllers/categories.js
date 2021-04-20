@@ -54,4 +54,12 @@ module.exports = {
       })
     }
   },
+  delete: async (req, res) => {
+    try {
+      await Category.remove({ _id: req.params.id });
+      res.send(`BlogPost ${req.params.id} is deleted`);
+    } catch (error) {
+      res.send({ message: error });
+    }
+  }
 };
