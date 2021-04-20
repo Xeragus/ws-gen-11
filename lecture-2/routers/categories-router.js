@@ -5,7 +5,8 @@ const categoriesController = require('../controllers/categories');
 router.get('/', categoriesController.fetchAll)
       .get('/:id', categoriesController.fetchOne)
       .post('/', categoriesController.create)
-      // .post('/', categoriesController.categoryUpdate)
+      .patch("/:id", categoriesController.patchUpdate)
+      .put("/:id", categoriesController.putUpdate)
       
 
 module.exports = router;

@@ -29,5 +29,29 @@ module.exports = {
     } catch (error) {
       errorResponse(res, 500, error.message)
     }
-  }
-}
+  },
+  patchUpdate: async (req, res) => {
+    try {
+     const category =  await Category.findByIdAndUpdate(req.params.id, req.body)
+     successResponse(res, 'Category updated', category);
+    } catch (error) {
+      errorResponse(res, 500, {
+        ...req.body,
+        _id: req.params.id,
+        error: error.message
+      })
+    }
+  },
+  putUpdate: async (req, res) => {
+    try {
+      const category = await Category.findOneAndReplace({_id: req.params.id}, req.body)
+      successResponse(res, 'Category updated', category);
+    }catch (error){
+      errorResponse(res, 500, {
+        ...req.body,
+        _id: req.params.id,
+        error: error.message
+      })
+    }
+  },
+};

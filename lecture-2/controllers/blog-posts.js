@@ -1,6 +1,7 @@
 const BlogPost = require('../models/blog-post')
 const successResponse = require('../services/success-response-sender');
 const errorResponse = require('../services/error-response-sender');
+const blogPost = require('../models/blog-post');
 
 module.exports = {
   fetchAll: async (req, res) => {
@@ -28,5 +29,29 @@ module.exports = {
     } catch (error) {
       errorResponse(res, 500, error.message)
     }
-  }
+  },
+  patchUpdate: async (req, res) => {
+    try {
+     const blogPost =  await blogPost.findByIdAndUpdate(req.params.id, req.body)
+     successResponse(res, 'Blog post updated', blogPost);
+    } catch (error) {
+      errorResponse(res, 500, {
+        ...req.body,
+        _id: req.params.id,
+        error: error.message
+      })
+    }
+  },
+  putUpdate: async (req, res) => {
+    try {
+      const blogPost = await blogPosts.findOneAndReplace({_id: req.params.id}, req.body)
+      successResponse(res, 'Blog post updated', blogPost);
+    }catch (error){
+      errorResponse(res, 500, {
+        ...req.body,
+        _id: req.params.id,
+        error: error.message
+      })
+    }
+  },
 }
