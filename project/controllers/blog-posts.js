@@ -22,6 +22,7 @@ module.exports = {
     }
   },
   create: async (req, res) => {
+    console.log(req.user);
     try {
       const blogPost = await BlogPost.create(req.body);
       successResponse(res, 'New blog post created', blogPost);
