@@ -50,5 +50,21 @@ module.exports = {
     } catch (error) {
       errorResponse(res, 500, error.message);
     }
+  },
+  refreshToken: (req, res) => {
+    try {
+      const payload = {
+        id: req.user.id,
+        email: req.user.email
+      }
+  
+      const token = jwt.sign(payload, '3218943205PADSOKDASI(*#$U(', {
+        expiresIn: '30m'
+      });
+  
+      successResponse(res, 'JWT successfully refreshed', token);
+    } catch (error) {
+      errorResponse(res, 500, error.message);
+    }
   }
-}
+};
