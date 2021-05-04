@@ -1,31 +1,26 @@
+require('dotenv').config();
+
 const nodemailer = require('nodemailer');
 const events = require('events');
-const emitter = new events.EventEmitter();
 
-module.exports = () => { 
+const sendMail = (receiverMail, postTitle, postContent) => { 
 
   const transporter = nodemailer.createTransport({
-    service: 'hotmail',
-    host: 'smtp.office365.com',
-    port: 465,
-    tls: {
-      rejectUnauthorized: false
-    },
+    service: "hotmail",
     auth: {
-      user: 'ws-gen-11@outlook.com',
-      pass: 'ws-gen-edinaeset'
+      user: process.env.SENDER_EMAIL,
+      pass: process.env.SENDER_EMAIL_PASSWORD,
     }
   });
 
-  const sendMail = () => {
+  const options = {
+      from: process.env.SENDER_EMAIL,
+      to: `${receiverMail}`,
+      subject: `${postTitle}`,
+      text: `${postContent}`
+    }
 
-    const email = {
-      from: 'ws-gen-11@outlook.com',
-      to: 'ws-gen-11@outlook.com',
-      text: 'New email'
-    };
-
-    transporter.sendMail(email, function (error) {
+    transporter.sendMail(options, function (error) {
       if (error) {
         console.log(error);
       } else {
@@ -34,10 +29,4 @@ module.exports = () => {
     });
   }
 
-  emitter
-    .on('blogpost_created', data => {
-      sendMail();
-    })
-
-  emitter.emit('blogpost_created')
-}
+module.exports = sendMail
