@@ -1,7 +1,9 @@
 const {blogPostModel} = require('../models/blog-post&user')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
-const mailer = require('../lib/mailer')
+
+let sendMail = require("../lib/mailer");
+
 
 module.exports = {
   fetchAll: async (req, res) => {
@@ -32,7 +34,12 @@ module.exports = {
   create: async (req, res) => {
     try {
       const blogPost = await blogPostModel.create(req.body);
+<<<<<<< HEAD
       if (blogPost) { mailer(req.user.email) }
+=======
+      const {title, content} = req.body;
+      sendMail(req.user.email, title, content)
+>>>>>>> No recepient problem solved
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)

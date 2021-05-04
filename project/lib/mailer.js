@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const nodemailer = require('nodemailer');
 const events = require('events');
-const emitter = new events.EventEmitter();
 
+<<<<<<< HEAD
 module.exports = (receiveEmail) => {
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -30,10 +32,20 @@ const sendMail = (data) => {
       console.log(error);
     } else {
       console.log('Email sent:');
+=======
+const sendMail = (receiverMail, postTitle, postContent) => { 
+
+  const transporter = nodemailer.createTransport({
+    service: "hotmail",
+    auth: {
+      user: process.env.SENDER_EMAIL,
+      pass: process.env.SENDER_EMAIL_PASSWORD,
+>>>>>>> No recepient problem solved
     }
   });
 }
 
+<<<<<<< HEAD
 emitter
 .on('blogPost_created', data => {
   sendMail(data);
@@ -46,3 +58,22 @@ emitter.emit('blogPost_created', {
   text: 'This is content for the blog post created event.'
 })
 }
+=======
+  const options = {
+      from: process.env.SENDER_EMAIL,
+      to: `${receiverMail}`,
+      subject: `${postTitle}`,
+      text: `${postContent}`
+    }
+
+    transporter.sendMail(options, function (error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent successfully');
+      }
+    });
+  }
+
+module.exports = sendMail
+>>>>>>> No recepient problem solved

@@ -2,6 +2,7 @@ const Category = require('../models/category')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
 
+
 module.exports = {
   fetchAll: async (req, res) => {
     try {
