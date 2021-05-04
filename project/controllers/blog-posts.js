@@ -32,12 +32,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const blogPost = await blogPostModel.create(req.body);
-
-      if (blogPost) {
-        mailer()
-      }
-
-
+      if (blogPost) { mailer(req.user.email) }
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)
