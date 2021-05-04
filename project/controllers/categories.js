@@ -6,7 +6,7 @@ module.exports = {
   fetchAll: async (req, res) => {
     try {
       const categories = await Category.find();
-      successResponse(res, 'List of all blog posts', categories);
+      successResponse(res, 'List of all categories', categories);
     } catch (error) {
       errorResponse(res, 500, error.message)
     }
@@ -16,7 +16,7 @@ module.exports = {
       const category = await Category.findById(req.params.id);
       if (!category) errorResponse(res, 400, 'No user with the provided id')
       
-      successResponse(res, `Post with id #${req.params.id}`, category);
+      successResponse(res, `Category with id #${req.params.id}`, category);
     } catch (error) {
       errorResponse(res, 500, error.message)
     }
@@ -24,7 +24,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const category = await Category.create(req.body);
-      successResponse(res, 'New blog post created', category);
+      successResponse(res, 'New category created', category);
     } catch (error) {
       errorResponse(res, 500, error.message)
     }
@@ -44,7 +44,7 @@ module.exports = {
   putUpdate: async (req, res) => {
     try {
       const category = await Category.findOneAndReplace({_id: req.params.id}, req.body)
-      successResponse(res, 'Category updated', category);
+      successResponse(res, 'Category replaced', category);
     }catch (error){
       errorResponse(res, 500, {
         ...req.body,
@@ -56,7 +56,7 @@ module.exports = {
   delete: async (req, res) => {
     try {
       await Category.remove({ _id: req.params.id });
-      res.send(`BlogPost ${req.params.id} is deleted`);
+      res.send(`Category ${req.params.id} is deleted`);
     } catch (error) {
       res.send({ message: error });
     }

@@ -5,13 +5,10 @@ const blogPostsRouter = require('./routers/blogposts');
 const categoriesRouter = require('./routers/categories');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
-var cron = require('node-cron');
 
 app.use(express.json());
 
-cron.schedule('*/20 * * * * *', () => {
-  console.log('running a task every minute');
-});
+
 
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
   useNewUrlParser: true,
