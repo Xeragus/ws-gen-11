@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const uploadRouter = require('./router/upload');
 app.use(express.json());
 
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
@@ -8,9 +9,7 @@ mongoose.connect("mongodb://localhost/ws-gen-11-project", {
   useUnifiedTopology: true,
 });
 
-app.use('/upload', (req, res) => { 
-  res.send('This is the upload service')
-});
+app.use('/upload', uploadRouter);
 
 app.listen("3001", (error) => {
   if (error) {
