@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const uploadRouter = require('./routers/upload');
+const downloadRouter = require('./routers/download');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
@@ -24,14 +24,14 @@ app.use((err, req, res, next) => {
   }
 })
 
-app.use('/upload', uploadRouter);
+app.use('/download', downloadRouter);
 
-app.listen("3001", (error) => {
+app.listen("3002", (error) => {
   if (error) {
     return console.log(
-      "Error happened while starting the app on port 3001: ",
+      "Error happened while starting the app on port 3002: ",
       error
     );
   }
-  console.log("Upload service successfully started on port 3001");
+  console.log("Download service successfully started on port 3002");
 });
