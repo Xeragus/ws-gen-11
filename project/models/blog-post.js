@@ -16,8 +16,11 @@ var blogPostSchema = mongoose.Schema({
   user: {
     type: mongoose.Types.ObjectId,
     ref: 'User'
+  },
+  likes: {
+    type: Array,
+    default: []
   }
-
 });
 
 var usersSchema = mongoose.Schema({
@@ -36,7 +39,7 @@ var usersSchema = mongoose.Schema({
 });
 
 const blogPostModel = mongoose.model("BlogPost", blogPostSchema);
-const userModel = mongoose.model("User", usersSchema)
+const userModel = mongoose.model("User", usersSchema);
 
 module.exports = {
   blogPostModel,

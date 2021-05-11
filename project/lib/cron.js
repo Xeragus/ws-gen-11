@@ -1,1 +1,0 @@
-console.log('NODE - CRON si gazi!!!')
