@@ -32,6 +32,14 @@ var usersSchema = mongoose.Schema({
   password: {
     type: String,
     required: ['Please provide the password of the user']
+  },
+  followers: {
+    type: Array,
+    default: [],
+  },
+  following: {
+    type: Array,
+    default: []
   }
 });
 

@@ -8,8 +8,6 @@ const errorResponse = require('../../lib/error-response-sender');
 
 app.use(express.json());
 
-
-
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
