@@ -4,8 +4,8 @@ const controller = require('../../../controllers/auth');
 
 router.post('/register', controller.register)
       .post('/login', controller.login)
+      .post('/logout', controller.logout)
       .get('/refresh-token', controller.refreshToken)
-      .get('/users', controller.fetchAll)
-      .get('/users/:id', controller.fetchOne)
+
 
 module.exports = router;
