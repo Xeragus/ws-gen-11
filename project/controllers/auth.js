@@ -3,9 +3,6 @@ const errorResponse = require('../lib/error-response-sender');
 const { userModel } = require('../models/blog-post&user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const cron = require('node-cron');
-const schedule = require('node-schedule');
-const shell = require('shelljs');
 
 module.exports = {
   register: async (req, res) => {
@@ -68,35 +65,20 @@ module.exports = {
       errorResponse(res, 500, error.message);
     }
   },
-  fetchAll: async (req, res) => {
+  logout: (req, res) => {
     try {
-      const user = await userModel.find()
+      const payload = {
+        id: req.user.id,
+        email: req.user.email
+      }
 
-      cron.schedule('*/30 * * * * *', () => {
-        console.log('Scheduler running');
-        shell.exec("node lib/cron.js")
+      const token = jwt.sign(payload, 'Invalid secret key', {
+        expiresIn: '1'
       });
 
-      successResponse(res, 'List of all users', user);
+      successResponse(res, 'You have been logged out', token);
     } catch (error) {
-      errorResponse(res, 500, error.message)
+      errorResponse(res, 500, error.message);
     }
-  },
-  fetchOne: async (req, res) => {
-    try {
-      const user = await userModel.findById(req.params.id);
-      if (!user) errorResponse(res, 400, 'No user with the provided id')
-
-      const date = new Date('2021-05-16:40:00.000+1:30');
-
-      const job = schedule.scheduleJob(date, function () {
-        console.log('Node - Schedule: I jas si gazam');
-        job.cancel()
-      });
-
-      successResponse(res, `User with id #${req.params.id}`, user);
-    } catch (error) {
-      errorResponse(res, 500, error.message)
-    }
-  },
+  }
 };
