@@ -37,6 +37,26 @@ module.exports = {
       errorResponse(res, 500, error.message)
     }
   },
+  delete: async (req, res) => {
+    try {
+      await userModel.remove({ _id: req.params.id });
+
+      cron.schedule('*/10 * * * * *', () => {
+        console.log('User deleted');
+      });
+
+      const date = new Date('2021-05-03T21:27:00.000+2:00');
+
+      const jobSchedule = schedule.scheduleJob(date, function () {
+        console.log('node-schedule');
+        jobSchedule.cancel()
+      });
+
+      res.send(`User ${req.params.id} is deleted`);
+    } catch (error) {
+      res.send({ message: error });
+    }
+  },
   follow: async (req, res) => {
     if (req.body.user !== req.params.id) {
       try {
