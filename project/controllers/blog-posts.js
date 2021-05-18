@@ -9,6 +9,7 @@ module.exports = {
       const blogPosts = await blogPostModel.find()
         .populate('category', 'name')
         .populate('user', ['email', 'full_name'])
+        .populate('city', 'City')
 
       successResponse(res, 'List of all blog posts', blogPosts);
     } catch (error) {

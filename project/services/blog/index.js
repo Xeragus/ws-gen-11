@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const blogPostsRouter = require('./routers/blogposts');
 const categoriesRouter = require('./routers/categories');
+const cityRouter = require('./routers/cities');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
@@ -19,7 +20,8 @@ app.use(jwt({
 }).unless({
   path: [
     {
-      url: '/blogposts', methods: ['GET']
+      url: '/blogposts', methods: ['GET'],
+      url: '/city', methods: ['GET']
     }
   ]
 }));
@@ -33,6 +35,7 @@ app.use((err, req, res, next) => {
 
 app.use('/blogposts', blogPostsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/city', cityRouter);
 
 app.listen("3000", (error) => {
   if (error) {

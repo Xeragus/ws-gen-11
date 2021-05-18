@@ -16,6 +16,10 @@ var blogPostSchema = mongoose.Schema({
   user: {
     type: mongoose.Types.ObjectId,
     ref: 'User'
+  },
+  city: {
+    type: mongoose.Types.ObjectId,
+    ref: 'City'
   }
 
 });
