@@ -1,18 +1,37 @@
-const { blogPostModel } = require('../models/blog-post&user')
+const { blogPostModel } = require('../models/blog-post-user')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
 const mailer = require('../lib/mailer')
 const axios = require('axios');
+
+
+const kelvinToCelsius = (kelvin) => {
+  return Math.round(kelvin - 273.15)
+}
 
 const getWeatherData = async (cityName) => {
   const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=9b5fa6d25b8720bf3aa2591a22661c04`)
 
   return {
     description: `${res.data.weather[0].main} (${res.data.weather[0].description})`,
-    temp: res.data.main.temp,
-    feels_like: res.data.main.feels_like,
-    temp_min: res.data.main.temp_min,
-    temp_max: res.data.main.temp_max
+    temp: kelvinToCelsius(res.data.main.temp),
+    feels_like: kelvinToCelsius(res.data.main.feels_like),
+    temp_min: kelvinToCelsius(res.data.main.temp_min),
+    temp_max: kelvinToCelsius(res.data.main.temp_max),
+    temp_unit: "Celsius"
+  }
+}
+
+const getHourlyWeather = async (cityName) => {
+  const res = await axios.get(`https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${cityName}&appid=345fd9d4d2d90e6ccc325647e8178546`)
+
+  return {
+    description: `${res.data.weather[0].main} (${res.data.weather[0].description})`,
+    temp: kelvinToCelsius(res.data.main.temp),
+    feels_like: kelvinToCelsius(res.data.main.feels_like),
+    temp_min: kelvinToCelsius(res.data.main.temp_min),
+    temp_max: kelvinToCelsius(res.data.main.temp_max),
+    temp_unit: "Celsius"
   }
 }
 
@@ -35,7 +54,7 @@ module.exports = {
         .populate('category', 'name')
         .populate('user', ['email', 'full_name'])
         .populate('city', 'name')
-      
+
       blogPost = blogPost.toObject();
       blogPost.city = {
         ...blogPost.city,

@@ -1,6 +1,6 @@
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
-const { userModel } = require('../models/blog-post&user')
+const { userModel } = require('../models/blog-post-user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mailer = require('../lib/mailer');
