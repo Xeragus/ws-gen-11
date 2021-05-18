@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const blogPostsRouter = require('./routers/blogposts');
 const categoriesRouter = require('./routers/categories');
+const citiesRouter = require('./routers/cities');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
@@ -33,6 +34,7 @@ app.use((err, req, res, next) => {
 
 app.use('/blogposts', blogPostsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/cities', citiesRouter);
 
 app.listen("3000", (error) => {
   if (error) {
