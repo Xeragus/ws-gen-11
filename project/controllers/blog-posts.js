@@ -2,6 +2,19 @@ const { blogPostModel } = require('../models/blog-post&user')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
 const mailer = require('../lib/mailer')
+const axios = require('axios');
+
+const getWeatherData = async (cityName) => {
+  const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=9b5fa6d25b8720bf3aa2591a22661c04`)
+
+  return {
+    description: `${res.data.weather[0].main} (${res.data.weather[0].description})`,
+    temp: res.data.main.temp,
+    feels_like: res.data.main.feels_like,
+    temp_min: res.data.main.temp_min,
+    temp_max: res.data.main.temp_max
+  }
+}
 
 module.exports = {
   fetchAll: async (req, res) => {
@@ -17,13 +30,17 @@ module.exports = {
     }
   },
   fetchOne: async (req, res) => {
-    console.log(req.user);
     try {
-      const blogPost = await blogPostModel.findById(req.params.id)
+      let blogPost = await blogPostModel.findById(req.params.id)
         .populate('category', 'name')
         .populate('user', ['email', 'full_name'])
         .populate('city', 'name')
-
+      
+      blogPost = blogPost.toObject();
+      blogPost.city = {
+        ...blogPost.city,
+        weather: await getWeatherData(blogPost.city.name)
+      }
       if (!blogPost) errorResponse(res, 400, 'No user with the provided id')
 
       successResponse(res, `Post with id #${req.params.id}`, blogPost);
@@ -34,6 +51,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const blogPost = await blogPostModel.create(req.body);
+      blogPost.city.hehe = 'hihi';
       if (blogPost) { mailer(req.user.email) }
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
