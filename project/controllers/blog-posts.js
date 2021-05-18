@@ -22,18 +22,6 @@ const getWeatherData = async (cityName) => {
   }
 }
 
-const getHourlyWeather = async (cityName) => {
-  const res = await axios.get(`https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${cityName}&appid=345fd9d4d2d90e6ccc325647e8178546`)
-
-  return {
-    description: `${res.data.weather[0].main} (${res.data.weather[0].description})`,
-    temp: kelvinToCelsius(res.data.main.temp),
-    feels_like: kelvinToCelsius(res.data.main.feels_like),
-    temp_min: kelvinToCelsius(res.data.main.temp_min),
-    temp_max: kelvinToCelsius(res.data.main.temp_max),
-    temp_unit: "Celsius"
-  }
-}
 
 module.exports = {
   fetchAll: async (req, res) => {
