@@ -9,6 +9,7 @@ module.exports = {
       const blogPosts = await blogPostModel.find()
         .populate('category', 'name')
         .populate('user', ['email', 'full_name'])
+        .populate('city', 'name')
 
       successResponse(res, 'List of all blog posts', blogPosts);
     } catch (error) {
@@ -21,6 +22,7 @@ module.exports = {
       const blogPost = await blogPostModel.findById(req.params.id)
         .populate('category', 'name')
         .populate('user', ['email', 'full_name'])
+        .populate('city', 'name')
 
       if (!blogPost) errorResponse(res, 400, 'No user with the provided id')
 
