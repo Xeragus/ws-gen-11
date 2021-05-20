@@ -5,7 +5,7 @@ const mailer = require('../lib/mailer')
 const axios = require('axios');
 
 const getWeatherData = async (cityName) => {
-  const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=9b5fa6d25b8720bf3aa2591a22661c04`)
+  const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=9b5fa6d25b8720bf3aa2591a22661c04`)
 
   return {
     description: `${res.data.weather[0].main} (${res.data.weather[0].description})`,
@@ -51,7 +51,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const blogPost = await blogPostModel.create(req.body);
-      blogPost.city.hehe = 'hihi';
+
       if (blogPost) { mailer(req.user.email) }
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
