@@ -22,7 +22,6 @@ const getWeatherData = async (cityName) => {
   }
 }
 
-
 module.exports = {
   fetchAll: async (req, res) => {
     try {
