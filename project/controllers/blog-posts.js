@@ -16,6 +16,20 @@ const getWeatherData = async (cityName) => {
   }
 }
 
+const fiveDaysWeatherData = async (cityName) => {
+  const res = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=9b5fa6d25b8720bf3aa2591a22661c04`)
+  
+  const weatherArray = []
+  res.data.list.forEach(city => {
+    const weather = {
+      dt: city.dt,
+      temp: city.main.temp
+    }
+    weatherArray.push(weather)
+  })
+  return weatherArray
+}
+
 module.exports = {
   fetchAll: async (req, res) => {
     try {
@@ -39,7 +53,8 @@ module.exports = {
       blogPost = blogPost.toObject();
       blogPost.city = {
         ...blogPost.city,
-        weather: await getWeatherData(blogPost.city.name)
+        weather: await getWeatherData(blogPost.city.name),
+        five_days: await fiveDaysWeatherData(blogPost.city.name)
       }
       if (!blogPost) errorResponse(res, 400, 'No user with the provided id')
 
