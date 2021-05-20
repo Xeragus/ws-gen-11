@@ -1,5 +1,5 @@
-const successResponse = require('../lib/success-response-sender');
-const errorResponse = require('../lib/error-response-sender');
+const successResponse = require('../lib/handlers/success-response-sender');
+const errorResponse = require('../lib/handlers/error-response-sender');
 const { userModel } = require('../models/blog-post&user')
 const cron = require('node-cron');
 const schedule = require('node-schedule');

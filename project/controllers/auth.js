@@ -1,9 +1,9 @@
-const successResponse = require('../lib/success-response-sender');
-const errorResponse = require('../lib/error-response-sender');
+const successResponse = require('../lib/handlers/success-response-sender');
+const errorResponse = require('../lib/handlers/error-response-sender');
 const { userModel } = require('../models/blog-post&user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const mailer = require('../lib/mailer');
+const mailer = require('../lib/mails/mailer');
 
 module.exports = {
   register: async (req, res) => {

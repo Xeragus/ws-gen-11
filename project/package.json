@@ -9,7 +9,7 @@
     "upload": "nodemon services/upload",
     "auth": "nodemon services/auth",
     "download": "nodemon services/download",
-    "weather": "nodemon services/weather", 
+    "weather": "nodemon services/weather",
     "all": "npm-run-all --parallel blog upload auth download weather"
   },
   "keywords": [],
@@ -18,6 +18,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
