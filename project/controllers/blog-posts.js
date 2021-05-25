@@ -2,8 +2,9 @@ const { blogPostModel } = require('../models/blog-post&user')
 const successResponse = require('../lib/handlers/success-response-sender');
 const errorResponse = require('../lib/handlers/error-response-sender');
 const enrichBlogPost = require('../lib/enrichers/blogposts');
-const mailgun = require('../lib/mails/mailgun');
-const pdf = require('../lib/mails/pdf')
+const sendMail = require('../lib/mails/mailgun');
+const createPDF = require('../lib/mails/pdf')
+const path = require('path')
 
 module.exports = {
   fetchAll: async (req, res) => {
@@ -36,8 +37,25 @@ module.exports = {
     try {
       const blogPost = await blogPostModel.create(req.body);
 
-      pdf()
-      mailgun()
+      if (blogPost) {
+        createPDF(blogPost);
+
+        const filepath = path.join(__dirname, `../pdfs/blogpost-${blogPost._id}.pdf`);
+        const data = {
+          from: "test@test.com",
+          to: "bobansugareski@gmail.com", // req.user.email
+          subject:'Congratulations!',
+          text:'Hello there! You have successfully created a blog post!',
+          html: `<h1>Ws Gen 11</h1><h3>Ws Gen 11</h3>`,
+          attachment: filepath
+        };
+
+        // TODO: Remove after promisification of the createPDF method
+        setTimeout(() => {
+          sendMail(data)
+        }, 2000);
+      }
+      
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)
