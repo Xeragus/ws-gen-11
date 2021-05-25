@@ -1,8 +1,9 @@
 const { blogPostModel } = require('../models/blog-post&user')
 const successResponse = require('../lib/handlers/success-response-sender');
 const errorResponse = require('../lib/handlers/error-response-sender');
-const mailer = require('../lib/mails/mailer')
 const enrichBlogPost = require('../lib/enrichers/blogposts');
+const mailgun = require('../lib/mails/mailgun');
+const pdf = require('../lib/mails/pdf')
 
 module.exports = {
   fetchAll: async (req, res) => {
@@ -35,7 +36,8 @@ module.exports = {
     try {
       const blogPost = await blogPostModel.create(req.body);
 
-      if (blogPost) { mailer(req.user.email) }
+      pdf()
+      mailgun()
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)
