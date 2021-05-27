@@ -43,10 +43,9 @@ module.exports = {
         const filepath = path.join(__dirname, `../pdfs/blogpost-${blogPost._id}.pdf`);
         const data = {
           from: "test@test.com",
-          to: "bobansugareski@gmail.com", // req.user.email
-          subject:'Congratulations!',
-          text:'Hello there! You have successfully created a blog post!',
-          html: `<h1>Ws Gen 11</h1><h3>Ws Gen 11</h3>`,
+          to: "ws-gen-11@outlook.com", // req.user.email
+          subject:'Discount 50% !',
+          template: "motor",
           attachment: filepath
         };
 
