@@ -43,11 +43,11 @@ module.exports = {
         const filepath = path.join(__dirname, `../pdfs/blogpost-${blogPost._id}.pdf`);
         const data = {
           from: "test@test.com",
-          to: "bobansugareski@gmail.com", // req.user.email
+          to: "semos-test@outlook.com", // req.user.email
           subject:'Congratulations!',
           text:'Hello there! You have successfully created a blog post!',
-          html: `<h1>Ws Gen 11</h1><h3>Ws Gen 11</h3>`,
-          attachment: filepath
+          attachment: filepath,
+          template: "password"
         };
 
         // TODO: Remove after promisification of the createPDF method
