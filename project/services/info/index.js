@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const basketballRouter = require('./routers/basketball');
 const footballRouter = require('./routers/football')
+const newsRouter = require('./routers/news')
 const jwt = require('express-jwt');
 const unauthorizedErrorHandler = require('../../lib/handlers/unathorized-error-handler');
 const serverStartLogger = require('../../lib/handlers/server-start-logger');
@@ -17,4 +18,5 @@ app.use(jwt({
 app.use((err, req, res, next) => unauthorizedErrorHandler(err, req, res, next));
 app.use('/basketball', basketballRouter);
 app.use('/football', footballRouter)
+app.use('/news', newsRouter)
 app.listen(process.env.INFO_API_PORT, error => serverStartLogger('Info', process.env.INFO_API_PORT, error));

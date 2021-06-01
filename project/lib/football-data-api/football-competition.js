@@ -3,7 +3,7 @@ const axios = require('axios');
 
 module.exports = async (competition) => {
   const res = await axios({
-    headers: { 'X-Auth-Token': '5585eb6627f94cf4bcf408f59abf28f6' },
+    headers: { 'X-Auth-Token': `${process.env.FOOTBALL_API_KEY}` },
     url: `https://api.football-data.org/v2/competitions/${competition}/standings?`,
     dataType: 'json',
     type: 'GET',
