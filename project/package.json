@@ -11,7 +11,8 @@
     "download": "nodemon services/download",
     "weather": "nodemon services/weather",
     "movies": "nodemon services/movies",
-    "all": "npm-run-all --parallel blog upload auth download weather movies"
+    "covid": "nodemon services/covid19",
+    "all": "npm-run-all --parallel blog upload auth download weather movies covid"
   },
   "keywords": [],
   "author": "",
