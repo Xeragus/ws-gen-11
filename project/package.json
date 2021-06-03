@@ -10,7 +10,8 @@
     "auth": "nodemon services/auth",
     "download": "nodemon services/download",
     "weather": "nodemon services/weather",
-    "all": "npm-run-all --parallel blog upload auth download weather"
+    "proxy": "nodemon services/proxy",
+    "all": "npm-run-all --parallel blog upload auth download weather proxy"
   },
   "keywords": [],
   "author": "",

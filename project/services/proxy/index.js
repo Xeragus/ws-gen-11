@@ -23,11 +23,12 @@ app.use('/blogposts', proxy(
   }
 ));
 
-app.listen(PORT || process.env.PROXY_SERVICE_PORT, err => {
+const PORT = process.env.PORT || process.env.PROXY_SERVICE_PORT;
+app.listen(PORT, err => {
   if(err) {
       return console.log('Could not start proxy service', err);
   }
-  console.log('Proxy service successfully started');
+  console.log(`Proxy service successfully started on port ${PORT}`);
 });
 
 //                          users (3000)       \
