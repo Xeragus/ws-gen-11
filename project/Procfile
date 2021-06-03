@@ -1,1 +1,1 @@
-web: node services/auth/index.js & node services/proxy/index.js
+web: node ./services/proxy/index.js
