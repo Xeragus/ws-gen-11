@@ -3,8 +3,20 @@ const successResponse = require('../lib/handlers/success-response-sender');
 const errorResponse = require('../lib/handlers/error-response-sender');
 const enrichBlogPost = require('../lib/enrichers/blogposts');
 const sendMail = require('../lib/mails/mailgun');
-const createPDF = require('../lib/mails/pdf')
+const createPDF = require('../lib/pdf/pdf')
 const path = require('path')
+
+const generateEmailData = (blogPost, toEmail) => {
+  const filepath = path.join(__dirname, `../pdfs/blogpost-${blogPost._id}.pdf`);
+  return {
+    from: "test@test.com",
+    to: 'xeragus.code@gmail.com', //toEmail,
+    subject:'Congratulations!',
+    text:'Hello there! You have successfully created a blog post!',
+    html: `<h1>Ws Gen 11</h1><h3>Ws Gen 11</h3>`,
+    attachment: filepath
+  };
+}
 
 module.exports = {
   fetchAll: async (req, res) => {
@@ -37,25 +49,15 @@ module.exports = {
     try {
       const blogPost = await blogPostModel.create(req.body);
 
-      if (blogPost) {
-        createPDF(blogPost);
-
-        const filepath = path.join(__dirname, `../pdfs/blogpost-${blogPost._id}.pdf`);
-        const data = {
-          from: "test@test.com",
-          to: "bobansugareski@gmail.com", // req.user.email
-          subject:'Congratulations!',
-          text:'Hello there! You have successfully created a blog post!',
-          html: `<h1>Ws Gen 11</h1><h3>Ws Gen 11</h3>`,
-          attachment: filepath
-        };
-
-        // TODO: Remove after promisification of the createPDF method
-        setTimeout(() => {
-          sendMail(data)
-        }, 2000);
-      }
+      // The Callback Way
+      // createPDF(blogPost, () => {
+      //   sendMail(generateEmailData(blogPost, req.user.email));
+      // });
       
+      // The Promised Land
+      await createPDF(blogPost);
+      sendMail(generateEmailData(blogPost, req.user.email));
+
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)

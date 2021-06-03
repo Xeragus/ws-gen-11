@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/ws-gen-11-project", {
+require('dotenv').config();
+
+mongoose.connect(`mongodb+srv://bobz:${process.env.MONGODB_PASSWORD}@cluster0.ngbhd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

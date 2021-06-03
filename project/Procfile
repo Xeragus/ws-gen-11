@@ -1,0 +1,1 @@
+web: node services/auth & node services/blog & node services/download & node services/upload & node services/weather & node services/proxy
